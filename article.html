@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/index.css"/>
+	<link rel="stylesheet" href="css/reset.css"/>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div class="interval_1"></div>
+	<div id="center_box" class="center_box">
+		<!-- 顶部导航栏 -->
+		<header id="header">
+			<img :class="class_head_img" :src="src_head"/><!-- 头像 -->
+			<ol><!-- 输出几个选项 -->
+				<todo
+					v-for="todo in lists" 
+					:todo = "todo" 
+					:key = "todo.id"
+					>
+				</todo>
+			</ol>
+		</header>
+	</div>
+	<!-- 文章 -->
+		<section id="main_content">
+			<main :id="title_nav">
+				<title-nav
+					v-for="todo in lists" 
+					:todo = "todo" 
+					:key = "todo.id"
+					>
+					
+				</title-nav>
+			</main>
+			<aside :id="news_aside">
+				<side-info
+				:todo="new_lists"
+				>
+				</side-info>
+			</aside>
+		</section>
+	<script src="vueJs/index.js"></script>
+</body>
+</html>

@@ -2,241 +2,60 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>音乐播放器</title>
-	<link rel="stylesheet" href="index.css">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/index.css"/>
+	<link rel="stylesheet" href="css/reset.css"/>
+	<script src="js/vue.js"></script>
 </head>
 <body>
-	<div class="box">
-		<!-- <ul class="songs">
-		</ul> -->
-		<div class="singBox">
-			<div class="bgWords">
-				<div class="onSongWord">
-					<ul class="songWord">
-					</ul>
-				</div>
-			</div>
-			<div class="songNews">
-				<div class="songName"></div>
-				<div class="border">
-					<div class="bar"></div>
-					<div class="songProgress"></div>
-				</div>
-				<div class="control">
-					<i class="last"></i>
-					<i class="play"></i>
-					<i class="next"></i>
-				</div>
-			</div>
-		</div>
+	<div class="interval_1"></div>
+	<div id="center_box" class="center_box">
+		<!-- 顶部导航栏 -->
+		<header id="header">
+			<img :class="class_head_img" :src="src_head"/><!-- 头像 -->
+			<ol><!-- 输出几个选项 -->
+				<todo
+					v-for="todo in lists" 
+					:todo = "todo" 
+					:key = "todo.id"
+					>
+				</todo>
+			</ol>
+		</header>
 	</div>
-	<script>
-		let $=function(e){
-			return document.querySelector(e);
-		}
-		/*let xhr = new XMLHttpRequest();//请求数据
-		xhr.onreadystatechange = function(){
-			if (xhr.readyState == 4) {
-				try{
-					if (xhr.status>=200&&xhr.status<200||xhr.status==304) {
-						let o=JSON.parse(xhr.response);
-						console.log(o);
-					}
-				}catch(e){
-					console.log(e)
-				}
-			}
-		}
-		xhr.open('get',"李晓峰 - 每个人都有个故事.txt",true);
-		xhr.responseType = "text";
-		xhr.send();*/
-		let last = $(".last"); //获取节点
-		let play = $(".play"); 
-		let next = $(".next");
-		let onSongWord = $(".onSongWord");
-		let songName = $(".songName");
-		let songs = $(".songs");
-		let index = 0;
-		let songSrc = ["青蛙 - 小跳蛙.mp3","李晓峰 - 每个人都有个故事.mp3","徐佳莹 - 身骑白马.mp3"];//歌曲列表src
-		let songWord =$(".songWord");
-		let songWords = ["[00:00.01]青蛙乐队 - 小跳蛙[00:03.00][00:04.50]词：彭钧 李润 曲：彭钧[00:07.50][00:14.21]快乐池塘栽种了梦想就变成海洋[00:18.53]鼓的眼睛大嘴巴同样唱的响亮[00:22.61]借我一双小翅膀就能飞向太阳[00:26.73]我相信奇迹就在身上[00:30.56]啦......[00:35.22]有你相伴 leap frog[00:38.07]啦......[00:42.17]自信成长 有你相伴 leap frog[00:47.34]快乐的一只小青蛙 leap frog[00:51.47]快乐的一只小青蛙 leap frog[00:55.71]（rap）快乐的池塘里面有只小青蛙[00:59.41]它跳起舞来就像被王子附体了[01:03.53]酷酷的眼神，没有哪只青蛙能比美[01:07.73]总有一天它会被公主唤醒了[01:11.07]啦...... leap frog[01:18.99]啦...... leap frog[01:27.14]它是一只小跳蛙 越过蓝色大西洋[01:31.77]跳到遥远的东方 跳到我们身旁[01:35.85]春夏秋冬 我们是最好的伙伴[01:39.86]亲吻它就会变得不一样[01:43.35]啦......[01:48.95]变变变 leap frog[01:51.33]啦......[01:55.34]自信成长 有你相伴 leap frog[01:59.47]啦......[02:04.72]有你相伴 leap frog[02:07.65]啦......[02:11.79]自信成长 有你相伴 leap frog[02:16.21]快乐的一只小青蛙 leap frog[02:21.20]快乐的一只小青蛙 leap frog[02:25.32]","[00:00.00]每个人都有个故事 - 李晓峰[00:00.71][00:01.68]作词：刘子滔[00:02.89]作曲：刘子滔[00:12.46][00:14.08]雨后清晨的海棠花[00:17.56]未落尽也不算繁华[00:20.93]它穿过冰冷的寒冬[00:24.27]只为了瞬间的相逢[00:27.51]花开像平凡的爱情[00:31.19]花落像骄傲的年轻[00:34.52]每个人的旅途不同[00:37.93]每颗心都曾被触碰[00:42.75][00:43.01]人们像繁星明亮却看不清[00:46.28]暗色的云层总也吹不尽[00:49.95]你说我们都像风[00:53.08]却在渴望自由[00:57.56][00:58.04]花开花又落[01:01.25]终随风带走[01:05.10]每个人都有个故事[01:08.75]只是想不想说[01:11.56]风带来回忆[01:15.08]也带走过去[01:18.86]我们 是故事里的过客[01:30.78][01:39.69]想去自己爱的城市[01:43.20]做自己喜欢的事[01:46.59]想和自己爱的那些人[01:50.03]努力让诺言变完整[01:57.07]身边总重复真与假[02:00.08]有时也会和自己说话[02:03.75]转身也许是晴空了[02:08.14][02:08.57]人们像繁星明亮却看不清[02:12.15]暗色的云层总也吹不尽[02:15.72]你说我们都像风[02:18.82]却在渴望自由[02:23.17][02:23.72]花开花又落[02:27.00]终随风带走[02:31.11]每个人都有个故事[02:34.52]只是想不想说[02:37.23]风带来回忆[02:40.66]也带走过去[02:44.55]我们 是故事里的过客[02:51.09][02:51.39]花开花又[02:54.54]终随风带走[02:58.58]每个人都有个故事[03:01.89]只是想不想说[03:04.67]风带来回忆[03:08.49]也带走过去[03:11.92]我们 是故事里的过客[03:18.69]花开花又落[03:21.78]情动又平和[03:25.69]时光 抚平着所有伤口[03:34.38][03:40.37]","[00:00.40]身骑白马[00:06.40]作词：徐佳莹、打打[00:12.40]作曲：徐佳莹、苏通达[00:18.40]演唱：徐佳莹[00:22.40][00:37.32]我爱谁 跨不过 从来也不觉得错[00:44.21]自以为 抓著痛 就能往回忆里躲[00:51.45]偏执相信著 受诅咒的水晶球[00:58.34]阻挡可能心动的理由[01:03.25][01:06.48]而你却 靠近了 逼我们视线交错[01:13.32]原地不动 或向前走 突然在意这分钟[01:20.75]眼前荒沙弥漫了等候 耳边传来孱弱的呼救[01:28.23]追赶要我爱的不保留[01:34.97][01:37.23]我身骑白马 走三关[01:45.21]我改换素衣 回中原[01:52.30]放下西凉 没人管[01:59.35]我一心只想 王宝钏[02:09.00][02:22.27]而你却 靠近了 逼我们视线交错[02:29.25]原地不动 或向前走 突然在意这分钟[02:36.38]眼前荒沙弥漫了等候 耳边传来孱弱的呼救[02:43.63]追赶要我爱的不保留[02:51.10][02:51.97]我身骑白马 走三关[02:58.35]我改换素衣 回中原[03:06.42]放下西凉 没人管[03:13.57]我一心只想 王宝钏[03:21.00][03:23.25]满身伤痕累累 也来不及痛[03:28.21]那是指引我走向你的清楚感受[03:37.34]不管危不危险 都要放下一切跟你走[03:43.27]只要一起承担 只要你不放手[03:52.00][03:52.76]我身骑白马 走三关[03:59.47]我改换素衣 回中原[04:07.32]放下西凉 没人管[04:14.43]我一心只想 王宝钏[04:22.00][04:22.77]嘿~[04:29.59]我改换素衣 回中原[04:37.06]放下西凉 没人管[04:43.76][04:46.38]我一心只想 王宝钏[04:58.09]"];
 
-		let songSrcLen = songSrc.length;
-		let border = $(".border");
-		let bar = $(".bar");
-		let sName = function(val){//提取歌曲名
-			let e = val.split(".");
-			return e[0];
-		}
-		// console.log(songWord.childNodes);
-		let sWord = function(val){//提取歌词
-			let one = val.split("[");
-			let arrayWord = one.map(function (item) {
-				// console.log(item);
-				let v = item.split("]");
-				// console.log(v);//这种形式["01:51.33", "啦......↵"]
-			  	return v;
-			});
-			console.log(arrayWord);//二维数组，不含空
-			return arrayWord;
-		}
-		let resetWord = function(){//重置歌词
-			while(songWord.hasChildNodes()) //当ul下还存在子节点时 循环继续  
-		    {
-		        songWord.removeChild(songWord.firstChild);
-		    }
-			let songWordArr = sWord(songWords[index]);
-			songWordArr.shift();
-			let songWordArrLen = songWordArr.length;
-			console.log(songWord.childNodes);
-			for (let i = 0; i < songWordArrLen; i++) {
-				let li = document.createElement("li");
-				li.innerHTML = songWordArr[i][1];
-				songWord.appendChild(li);
-			}
-			return songWordArr;
-		}
-		songWordArr = resetWord();//将函数里的数据拿出来，["00:00.01", "青蛙乐队 - 小跳蛙"]
-		
-		// songWordArr
-		let time3;
-		let arrMap = function(arr){
-			let onTime = arr.map(function (item,index) {
-				let v = item[0].split(":");
-				console.log(v);
-			  	return v;
-			});
-			return onTime;
-		}
-		let onTime = arrMap(songWordArr);
-		console.log(onTime);//全部时间，二维数组["00", "00.01"]
-		// }
-		let num = 0;
-		let listen2 = function(){//监听歌词
-			time3 = setTimeout(function(){
-				let cur=audioObject.currentTime;
-				let timeM = parseInt(onTime[num][0], 10);
-				let timeS = parseFloat(onTime[num][1]);
-				timeM = timeM*60;
-				if(cur>(timeM+timeS)&&num<onTime.length-1){//比较当前播放时间，与歌词高亮句时间的大小
-					if(num>0){//下一句变亮
-						songWord.childNodes[num-1].style.color = "black";
-						songWord.childNodes[num].style.color = "white";
-						onSongWord.style.height = onSongWord.offsetHeight+24+"px";
-					}
-					num+=1;
-				}
-				listen2();
-			},50)
-		}
-		listen2();
-		var audioObject = new Audio();
-		songName.innerHTML = sName(songSrc[0]);
-		audioObject.src = songSrc[index];//资源填充
-		play.style.backgroundImage = "url(播放.png)";
-		let fuWei = function(){//
-			let cur=audioObject.currentTime;//获取当前播放时间
-			let timeM = parseInt(onTime[num][0], 10);
-			let timeS = parseFloat(onTime[num][1]);
-			timeM = timeM*60;
-			let time4;
-			let x = function(){
-				while(cur<(timeM+timeS)&&num>1){//当前播放的时间<歌词时间
-					num-=1;
-					songWord.childNodes[num+1].style.color = "black";
-					onSongWord.style.height = onSongWord.offsetHeight-24+"px";
-					console.log(num);//12224
-				}
-			}
-			x();
-		}
-		next.onclick = function(){//下一曲，进度条清空，歌曲index+1
-			index+=1;
-			if(index>songSrcLen-1){
-				index = 0;
-			}
-			audioObject.src = songSrc[index];
-			songName.innerHTML = sName(songSrc[index]);
-			songProgress.style.width=0+"px";
-  		    bar.style.left=0+"px";
-			play.style.backgroundImage = "url(暂停.png)";
-			audioObject.play();
-			songWordArr = resetWord();
-			console.log(songWordArr);
-			onTime = arrMap(songWordArr);
-			fuWei();
-		}
-		last.onclick = function(){//上一曲，进度条清空，歌曲index+1
-			index-=1;
-			if(index<0){
-				index = songSrcLen-1;
-			}
-			audioObject.src = songSrc[index];
-			songName.innerHTML = sName(songSrc[index]);
-			songProgress.style.width=0+"px";
-  		    bar.style.left=0+"px";
-			play.style.backgroundImage = "url(暂停.png)";
-			audioObject.play();
-			songWordArr = resetWord();
-			onTime = arrMap(songWordArr);//歌词时间对应刷新
-			fuWei();
-		}
-		play.onclick = function(){//播放暂停键
-			let str = this.style.backgroundImage;
-			if(str.indexOf("播放")!=-1){
-				audioObject.play();
-				this.style.backgroundImage = "url(暂停.png)";
-			}else{
-				audioObject.pause();
-				this.style.backgroundImage = "url(播放.png)";
-			}
-		}
-		let songProgress = $(".songProgress");
-		let time1,time2;
-		let listen1 = function(){//进度条
-			let borderLen = border.offsetWidth - bar.offsetWidth;
-			time1=setTimeout(function(){ 
-				var lenth=audioObject.duration;
-        		let cur=audioObject.currentTime;//获取当前的播放时间
-  		        songProgress.style.width=""+parseFloat(cur/lenth)*borderLen+"px";
-  		        bar.style.left=""+parseFloat(cur/lenth)*borderLen+"px";
-  		        if(bar.offsetLeft==borderLen){//循环播放
-  		        	next.onclick();
-  		        }  
-        		listen1();
-        	},1000);
-		}
-		listen1();
-
-		//进度条滑动改变音频进度
-		let leftVal;
-		bar.onmousedown = function(e){
-			var that = this;
-			let cliX = e.clientX;
-			leftVal = e.clientX - this.offsetLeft;//计算进度条起点坐标，300
-			document.onmousemove = function(e){
-				let left = e.clientX - leftVal;//计算滑动了多长的距离
-				let cha = e.clientX-cliX;//判断向左滑距离
-				if(cha<0){//判断向左滑
-					fuWei();
-				}
-				
-				if(left<0){
-					left = 0;
-				}else if(left<=border.offsetWidth - bar.offsetWidth){
-					songProgress.style.width = left+"px";
-					that.style.left = left+"px";
-					time2=setTimeout(function(){ 
-					var lenth=audioObject.duration;//全部时间获取必须放在定时器里
-						audioObject.currentTime = parseFloat(left/border.offsetWidth)*lenth;
-		        	},0);
-				}
-				window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
-			}
-		}
-		document.onmouseup =function(){
-			document.onmousemove = null;
-		};
-	</script>
+	<section id="bg"><!-- 主页图片 -->
+		<img :class="class_head_bg"  :src="src_bg"/>
+	</section>
+	<div class="interval_2"></div>
+	<!-- <div id="center_box"> -->
+		<section id="saying">
+			<saying
+				v-for="saying in lists" 
+				:saying = "saying" 
+				:key = "saying.id"
+				>
+			</saying>
+		</section>
+	<!-- </div> -->
+	<!-- 分享的文章链接 -->
+		<section id="main_content">
+			<main :id="title_nav">
+				<title-nav
+					v-for="todo in lists" 
+					:todo = "todo" 
+					:key = "todo.id"
+					>
+					
+				</title-nav>
+			</main>
+			<aside :id="news_aside">
+				<side-info
+				:todo="new_lists"
+				>
+				</side-info>
+			</aside>
+		</section>
+	<script src="vueJs/index.js"></script>
 </body>
 </html>
