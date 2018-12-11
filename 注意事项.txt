@@ -1,0 +1,7 @@
+一些问题：
+
+html5 autoplay不起作用 Uncaught (in promise) DOMException: play() failed because the user didn't interac
+解决方案：
+Open chrome://flags/#autoplay-policy
+Setting No user gesture is required
+Relaunch Chrome
